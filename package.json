@@ -9,9 +9,30 @@
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+    "onLanguage:asn1",
+    "onCommand:vscode-asn1.helloWorld"
+  ],
   "main": "./out/extension.js",
   "contributes": {
+    "languages": [
+      {
+        "id": "asn1",
+        "aliases": [
+          "ASN.1",
+          "asn1"
+        ],
+        "extensions": [
+          ".asn",
+          ".asn1",
+          ".mib",
+          ".smi",
+          ".smiv1",
+          ".smiv2"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
     "commands": [
       {
         "command": "vscode-asn1.helloWorld",
