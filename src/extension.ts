@@ -7,7 +7,8 @@ import {
   LanguageClient,
   LanguageClientOptions,
   ServerOptions,
-  Executable
+  Executable,
+  DocumentSelector
 } from 'vscode-languageclient/node';
 
 let client: LanguageClient | undefined;
@@ -17,12 +18,6 @@ const GITHUB_REPO = 'tdanner/asn1-lsp';
 export async function activate(context: vscode.ExtensionContext): Promise<void> {
   console.log('Activating vscode-asn1 extension');
   await vscode.workspace.fs.createDirectory(context.globalStorageUri);
-
-  const disposable = vscode.commands.registerCommand('vscode-asn1.helloWorld', () => {
-    vscode.window.showInformationMessage('Hello World from vscode-asn1!');
-  });
-  context.subscriptions.push(disposable);
-
   await startLanguageClient(context);
 }
 
@@ -41,8 +36,12 @@ async function startLanguageClient(context: vscode.ExtensionContext): Promise<vo
       args: []
     };
     const serverOptions: ServerOptions = executable;
+    const documentSelector: DocumentSelector = [
+      { scheme: 'file', language: 'asn1' },
+      { scheme: 'untitled', language: 'asn1' }
+    ];
     const clientOptions: LanguageClientOptions = {
-      documentSelector: [{ language: 'asn1' }]
+      documentSelector
     };
 
     client = new LanguageClient('asn1Lsp', 'ASN.1 Language Server', serverOptions, clientOptions);

@@ -9,10 +9,7 @@
   "categories": [
     "Other"
   ],
-  "activationEvents": [
-    "onLanguage:asn1",
-    "onCommand:vscode-asn1.helloWorld"
-  ],
+  "activationEvents": [],
   "main": "./out/extension.js",
   "contributes": {
     "languages": [
@@ -33,12 +30,7 @@
         "configuration": "./language-configuration.json"
       }
     ],
-    "commands": [
-      {
-        "command": "vscode-asn1.helloWorld",
-        "title": "Hello World"
-      }
-    ],
+    "commands": [],
     "configuration": {
       "title": "ASN.1 Language Server",
       "properties": {
@@ -56,6 +48,51 @@
           ],
           "markdownDescription": "Select which GitHub release channel to use when downloading the asn1-lsp binary."
         }
+      }
+    },
+    "semanticTokenScopes": [
+      {
+        "language": "asn1",
+        "scopes": {
+          "comment": [
+            "comment",
+            "comment.block",
+            "comment.line"
+          ],
+          "string": [
+            "string",
+            "string.quoted"
+          ],
+          "number": [
+            "constant.numeric",
+            "number"
+          ],
+          "namespace": [
+            "entity.name.namespace",
+            "support.module"
+          ],
+          "type": [
+            "entity.name.type",
+            "support.type"
+          ],
+          "variable": [
+            "variable",
+            "variable.other"
+          ],
+          "macro": [
+            "entity.name.function.preprocessor",
+            "entity.name.function"
+          ],
+          "keyword": [
+            "keyword",
+            "keyword.control"
+          ]
+        }
+      }
+    ],
+    "configurationDefaults": {
+      "[asn1]": {
+        "editor.semanticHighlighting.enabled": true
       }
     }
   },
