@@ -38,7 +38,30 @@
         "command": "vscode-asn1.helloWorld",
         "title": "Hello World"
       }
-    ]
+    ],
+    "configuration": {
+      "title": "ASN.1 Language Server",
+      "properties": {
+        "asn1Lsp.serverPath": {
+          "type": "string",
+          "default": "",
+          "markdownDescription": "Override the path to the asn1-lsp executable. Leave empty to download automatically from GitHub releases."
+        },
+        "asn1Lsp.releaseChannel": {
+          "type": "string",
+          "default": "latest",
+          "enum": [
+            "latest",
+            "nightly"
+          ],
+          "markdownDescription": "Select which GitHub release channel to use when downloading the asn1-lsp binary."
+        }
+      }
+    }
+  },
+  "dependencies": {
+    "adm-zip": "^0.5.15",
+    "vscode-languageclient": "^9.0.1"
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
@@ -49,14 +72,15 @@
     "test": "vscode-test"
   },
   "devDependencies": {
-    "@types/vscode": "^1.105.0",
+    "@types/adm-zip": "^0.5.7",
     "@types/mocha": "^10.0.10",
     "@types/node": "22.x",
+    "@types/vscode": "^1.105.0",
     "@typescript-eslint/eslint-plugin": "^8.45.0",
     "@typescript-eslint/parser": "^8.45.0",
-    "eslint": "^9.36.0",
-    "typescript": "^5.9.3",
     "@vscode/test-cli": "^0.0.11",
-    "@vscode/test-electron": "^2.5.2"
+    "@vscode/test-electron": "^2.5.2",
+    "eslint": "^9.36.0",
+    "typescript": "^5.9.3"
   }
 }
