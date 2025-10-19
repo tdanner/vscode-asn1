@@ -34,16 +34,9 @@ async function main() {
     sourcemap: !production,
     sourcesContent: false,
     platform: "node",
+    target: ["node18"],
     outfile: "dist/extension.js",
-    external: [
-      "vscode",
-      "adm-zip",
-      "vscode-languageclient",
-      "vscode-languageclient/node",
-      "vscode-jsonrpc",
-      "vscode-languageserver-protocol",
-      "vscode-languageserver-types",
-    ],
+    external: ["vscode"],
     logLevel: "silent",
     plugins: [
       /* add to the end of plugins array */
