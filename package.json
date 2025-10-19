@@ -14,6 +14,11 @@
     "url": "https://github.com/tdanner/vscode-asn1/issues"
   },
   "version": "0.0.1",
+  "icon": "media/icon.png",
+  "galleryBanner": {
+    "color": "#0E1A2A",
+    "theme": "dark"
+  },
   "engines": {
     "vscode": "^1.105.0"
   },
@@ -128,6 +133,7 @@
     "pretest": "npm run compile-tests && npm run compile && npm run lint",
     "check-types": "tsc --noEmit",
     "lint": "eslint src",
+    "render:assets": "node scripts/render-assets.mjs",
     "test": "vscode-test"
   },
   "devDependencies": {
@@ -137,6 +143,7 @@
     "@types/vscode": "^1.105.0",
     "@typescript-eslint/eslint-plugin": "^8.45.0",
     "@typescript-eslint/parser": "^8.45.0",
+    "@resvg/resvg-js": "^2.6.1",
     "@vscode/test-cli": "^0.0.11",
     "@vscode/test-electron": "^2.5.2",
     "@vscode/vsce": "^3.6.2",
