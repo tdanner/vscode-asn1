@@ -2,6 +2,16 @@
 .vscode-test/**
 out/**
 node_modules/**
+!node_modules/adm-zip/**
+!node_modules/brace-expansion/**
+!node_modules/balanced-match/**
+!node_modules/concat-map/**
+!node_modules/minimatch/**
+!node_modules/semver/**
+!node_modules/vscode-jsonrpc/**
+!node_modules/vscode-languageclient/**
+!node_modules/vscode-languageserver-protocol/**
+!node_modules/vscode-languageserver-types/**
 src/**
 .gitignore
 .yarnrc
@@ -14,3 +24,6 @@ vsc-extension-quickstart.md
 **/.vscode-test.*
 .direnv/**
 .envrc
+flake.lock
+flake.nix
+azure-pipelines.yml
