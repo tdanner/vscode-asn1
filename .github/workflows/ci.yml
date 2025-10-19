@@ -36,21 +36,21 @@ jobs:
           export VERSION
           echo "Setting package version to ${VERSION}"
           node <<'NODE'
-const fs = require('fs');
-const version = process.env.VERSION;
-if (!version) {
-  throw new Error('VERSION environment variable is required');
-}
-for (const file of ['package.json', 'package-lock.json']) {
-  if (!fs.existsSync(file)) continue;
-  const contents = fs.readFileSync(file, 'utf8');
-  const json = JSON.parse(contents);
-  if (json.version === version) continue;
-  json.version = version;
-  fs.writeFileSync(file, JSON.stringify(json, null, 2) + '\n');
-  console.log(`Updated ${file} to version ${version}`);
-}
-NODE
+            const fs = require('fs');
+            const version = process.env.VERSION;
+            if (!version) {
+              throw new Error('VERSION environment variable is required');
+            }
+            for (const file of ['package.json', 'package-lock.json']) {
+              if (!fs.existsSync(file)) continue;
+              const contents = fs.readFileSync(file, 'utf8');
+              const json = JSON.parse(contents);
+              if (json.version === version) continue;
+              json.version = version;
+              fs.writeFileSync(file, JSON.stringify(json, null, 2) + '\n');
+              console.log(`Updated ${file} to version ${version}`);
+            }
+            NODE
 
       - name: Start xvfb
         if: runner.os == 'Linux'
