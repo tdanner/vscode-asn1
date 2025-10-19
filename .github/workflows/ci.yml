@@ -78,6 +78,13 @@ jobs:
           ['package.json', 'package-lock.json'].forEach(updateJson);
           NODE
 
+      - name: Generate changelog from release notes
+        if: runner.os == 'Linux' && startsWith(github.ref, 'refs/tags/')
+        env:
+          RAW_VERSION: ${{ github.ref_name }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node scripts/generate-changelog-from-release.mjs
+
       - name: Start xvfb
         if: runner.os == 'Linux'
         run: |
