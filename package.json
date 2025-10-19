@@ -2,6 +2,10 @@
   "name": "vscode-asn1",
   "displayName": "vscode-asn1",
   "description": "Syntax highlighting and navigation for ASN.1/SNMP MIB files",
+  "repository": {
+    "url": "https://github.com/tdanner/vscode-asn1.git",
+    "type": "git"
+  },
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.105.0"
@@ -106,7 +110,9 @@
     "watch": "tsc -watch -p ./",
     "pretest": "npm run compile && npm run lint",
     "lint": "eslint src",
-    "test": "vscode-test"
+    "test": "vscode-test",
+    "package": "vsce package",
+    "publish": "vsce publish"
   },
   "devDependencies": {
     "@types/adm-zip": "^0.5.7",
@@ -117,6 +123,7 @@
     "@typescript-eslint/parser": "^8.45.0",
     "@vscode/test-cli": "^0.0.11",
     "@vscode/test-electron": "^2.5.2",
+    "@vscode/vsce": "^3.6.2",
     "eslint": "^9.36.0",
     "typescript": "^5.9.3"
   }
