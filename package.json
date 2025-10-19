@@ -2,9 +2,16 @@
   "name": "vscode-asn1",
   "displayName": "vscode-asn1",
   "description": "Syntax highlighting and navigation for ASN.1/SNMP MIB files",
+  "publisher": "tdanner",
+  "author": "Tim Danner",
   "repository": {
     "url": "https://github.com/tdanner/vscode-asn1.git",
     "type": "git"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/tdanner/vscode-asn1",
+  "bugs": {
+    "url": "https://github.com/tdanner/vscode-asn1/issues"
   },
   "version": "0.0.1",
   "engines": {
@@ -12,6 +19,11 @@
   },
   "categories": [
     "Programming Languages"
+  ],
+  "keywords": [
+    "snmp",
+    "mib",
+    "asn.1"
   ],
   "activationEvents": [],
   "main": "./dist/extension.js",
