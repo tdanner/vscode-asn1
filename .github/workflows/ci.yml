@@ -35,24 +35,47 @@ jobs:
         env:
           RAW_VERSION: ${{ github.ref_name }}
         run: |
-          VERSION="${RAW_VERSION#v}"
-          export VERSION
-          echo "Setting package version to ${VERSION}"
           node <<'NODE'
-            const fs = require('fs');
-            const version = process.env.VERSION;
-            if (!version) {
-              throw new Error('VERSION environment variable is required');
+          const fs = require('fs');
+          const path = require('path');
+
+          const raw = process.env.RAW_VERSION;
+          if (!raw) {
+            throw new Error('RAW_VERSION environment variable is required');
+          }
+
+          const tagName = raw.replace(/^refs\/tags\//, '');
+          const version = tagName.replace(/^[vV]/, '').replace(/^\.+/, '');
+          const semverPattern = /^[0-9]+(?:\.[0-9]+){2}(?:-[0-9A-Za-z.-]+)?(?:\+[0-9A-Za-z.-]+)?$/;
+
+          if (!semverPattern.test(version)) {
+            throw new Error(`Tag "${raw}" does not yield a valid semver version (got "${version}")`);
+          }
+
+          console.log(`Setting package version to ${version}`);
+
+          const updateJson = (file) => {
+            if (!fs.existsSync(file)) return;
+            const contents = fs.readFileSync(file, 'utf8');
+            const json = JSON.parse(contents);
+
+            const applyVersion = (obj) => {
+              if (obj && typeof obj === 'object' && 'version' in obj) {
+                obj.version = version;
+              }
+            };
+
+            applyVersion(json);
+            if (json.packages && typeof json.packages === 'object') {
+              const rootPackage = json.packages[''] || json.packages[path.normalize('')];
+              applyVersion(rootPackage);
             }
-            for (const file of ['package.json', 'package-lock.json']) {
-              if (!fs.existsSync(file)) continue;
-              const contents = fs.readFileSync(file, 'utf8');
-              const json = JSON.parse(contents);
-              if (json.version === version) continue;
-              json.version = version;
-              fs.writeFileSync(file, JSON.stringify(json, null, 2) + '\n');
-              console.log(`Updated ${file} to version ${version}`);
-            }
+
+            fs.writeFileSync(file, JSON.stringify(json, null, 2) + '\n');
+            console.log(`Updated ${file} to version ${version}`);
+          };
+
+          ['package.json', 'package-lock.json'].forEach(updateJson);
           NODE
 
       - name: Start xvfb
