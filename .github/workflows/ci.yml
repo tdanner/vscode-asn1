@@ -26,6 +26,32 @@ jobs:
         with:
           node-version: "20.x"
 
+      - name: Align package version with tag
+        if: startsWith(github.ref, 'refs/tags/')
+        shell: bash
+        env:
+          RAW_VERSION: ${{ github.ref_name }}
+        run: |
+          VERSION="${RAW_VERSION#v}"
+          export VERSION
+          echo "Setting package version to ${VERSION}"
+          node <<'NODE'
+const fs = require('fs');
+const version = process.env.VERSION;
+if (!version) {
+  throw new Error('VERSION environment variable is required');
+}
+for (const file of ['package.json', 'package-lock.json']) {
+  if (!fs.existsSync(file)) continue;
+  const contents = fs.readFileSync(file, 'utf8');
+  const json = JSON.parse(contents);
+  if (json.version === version) continue;
+  json.version = version;
+  fs.writeFileSync(file, JSON.stringify(json, null, 2) + '\n');
+  console.log(`Updated ${file} to version ${version}`);
+}
+NODE
+
       - name: Start xvfb
         if: runner.os == 'Linux'
         run: |
@@ -61,3 +87,9 @@ jobs:
         with:
           name: vscode-asn1-vsix
           path: "*.vsix"
+
+      - name: Upload VSIX to GitHub Release
+        if: runner.os == 'Linux' && startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: "*.vsix"
