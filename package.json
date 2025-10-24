@@ -48,6 +48,11 @@
           ".smiv1",
           ".smiv2"
         ],
+        "filenamePatterns": [
+          "*-MIB",
+          "*-TC",
+          "*-SMI"
+        ],
         "configuration": "./language-configuration.json"
       }
     ],
